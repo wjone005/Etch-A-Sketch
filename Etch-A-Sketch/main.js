@@ -18,37 +18,38 @@ function createDivs(size){
         container.appendChild(box);
         box.addEventListener("mouseover", hoverBlack);
     }
-    document.documentElement.style.setProperty("--rowNum", size);
-    document.documentElement.style.setProperty("--colNum", size);
-    return;
+  document.documentElement.style.setProperty("--rowNum", size);
+  document.documentElement.style.setProperty("--colNum", size);
+  return;
   }
 
-  
-  function getNewDivs(size){
-    let totalSquares = size * size;
-        for (let i = 0; i < size * size; i++) {
+  // Get Second Grid
+function getNewDivs(size){
+  let totalSquares = size * size;
+    for (let i = 0; i < size * size; i++) {
 
-            // Create div elements
-            box = document.createElement('div');
-            box.classList.add('grid-item');
+      // Create div elements
+      box = document.createElement('div');
+      box.classList.add('grid-item');
 
-            //confirm it to the container
-            container.appendChild(box);
-            box.addEventListener("mouseover", hoverColor);
+      //confirm it to the container
+      container.appendChild(box);
+      box.addEventListener("mouseover", hoverColor);
   }
-    document.documentElement.style.setProperty("--rowNum", size);
-    document.documentElement.style.setProperty("--rowCol", size);
-    return;
+  document.documentElement.style.setProperty("--rowNum", size);
+  document.documentElement.style.setProperty("--rowCol", size);
+  return;
   }
 
-  function clearGrid(){
-    while (container.firstChild){
-        container.removeChild(container.firstChild);
+// Remove all squares
+function clearGrid(){
+  while (container.firstChild){
+      container.removeChild(container.firstChild);
     }
 }
 
 
-  // Color grid black
+// Color grid black
 function hoverBlack(e) {
   const blackButton = document.getElementById('blackButton');
   blackButton.addEventListener("click", hoverBlack);
@@ -86,7 +87,6 @@ function getResponse(){
         return getResponse()
        }
        else{
-         console.log(response);
         return response;
        }
 }
@@ -96,13 +96,13 @@ function getResponse(){
     if (e.target.id == "blackButton") {
       container.removeEventListener("mouseover", hoverColor);
       container.addEventListener("mouseover", hoverBlack);
-    } else if (e.target.id == "rainbowButton") {
+    } 
+    else if (e.target.id == "rainbowButton") {
       container.removeEventListener("mouseover", hoverBlack);
-      container.addEventListener("mouseover", hoverColor);
-      
-    } else if (e.target.id == "resetButton") {
+      container.addEventListener("mouseover", hoverColor); 
+    } 
+    else if (e.target.id == "resetButton") {
       clearGrid()
       getResponse()
-      
     }
   });
