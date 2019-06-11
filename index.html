@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html>
-    <head><link rel="stylesheet" href="style.css"></head>
-    <body>
+    <head><link rel="stylesheet" href="style.css" type="text/css"></head>
+      <title> Etch a Sketch</title>
+      <body>
         <center>
-                <h1>
-                        Etch A Sketch
-                      </h1>
+          <h1>
+              Etch A Sketch
+          </h1>
+          <nav id="navigation">
+            <button id="resetButton">Reset Grid</button>
+            <button id="blackButton">Set Color to Black</button>
+            <button id="rainbowButton">Set Color to Rainbow</button>
+          </nav>
         </center>
-      
-      <div id="container"></div>
-    </body>
+        <div class="grid">
+        <main>
+          <div id="container"></div>
+        </main>
+        </div>
+        <div id="circle"></div>
+      </body>
     <script src="main.js"></script>
 </html>
