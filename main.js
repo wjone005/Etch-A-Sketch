@@ -1,60 +1,108 @@
+// Select container
+const container = document.querySelector('#container');
+let box;
 
+ 
+createDivs(16)
 
-let test = document.getElementsByClassName("grid-item");
-
-
-createDivs()
-
-
-
-
-
-
-
-
-function createDivs(){
-    const container = document.querySelector('#container');
-    let box = [];
-    let saveBox = [];
-    let newBox = [];
-    let newSaveBox = [];
-    //let test = document.getElementById("grid-item")
-
-    for (var i = 0; i < 256; i++) {
+// First Grid
+function createDivs(size){
+  let totalSquares = size * size;
+    for (let i = 0; i < totalSquares; i++) {
         // Create div elements
-        box[i] = document.createElement('div');
-        // Apply attributes an id named "grid-item"
-        box[i].setAttribute("class", "grid-item");
-        //box[i].style.backgroundColor = 'yellow';
-        //box[i].style.cursor = 'pointer';
-        
+        box = document.createElement('div');
+        // Assign grid-item class to div
+        box.classList.add('grid-item');
 
-        box[i].addEventListener("mouseover", (e) => {
-                //console.log("Hello " + this + " (" + this.innerHTML + ") from event listener [0]");
-                
-                
-            });
-        //});
         //confirm it to the container
-        saveBox[i] = container.appendChild(box[i]);
+        container.appendChild(box);
+        box.addEventListener("mouseover", hoverBlack);
     }
-  
-    
-
-    return;
+  document.documentElement.style.setProperty("--rowNum", size);
+  document.documentElement.style.setProperty("--colNum", size);
+  return;
   }
 
-function createPointer(){
-    // grid-item is a node list. It looks and acts much like an array.
-    const pointer = document.querySelectorAll('grid-item');
+  // Get Second Grid
+function getNewDivs(size){
+  let totalSquares = size * size;
+    for (let i = 0; i < size * size; i++) {
 
-    // we use the .forEach method to iterate through each div
-    pointer.forEach((div) => {
+      // Create div elements
+      box = document.createElement('div');
+      box.classList.add('grid-item');
 
-    // and for each one we add a 'hover' listener
-    pointer.addEventListener('mouseover', (e) => {
-    let getPointer = div.className;
-    getPointer.style.cursor = pointer;
-    });
-    });
+      //confirm it to the container
+      container.appendChild(box);
+      box.addEventListener("mouseover", hoverColor);
   }
+  document.documentElement.style.setProperty("--rowNum", size);
+  document.documentElement.style.setProperty("--rowCol", size);
+  return;
+  }
+
+// Remove all squares
+function clearGrid(){
+  while (container.firstChild){
+      container.removeChild(container.firstChild);
+    }
+}
+
+
+// Color grid black
+function hoverBlack(e) {
+  const blackButton = document.getElementById('blackButton');
+  blackButton.addEventListener("click", hoverBlack);
+  if (e.target.className === "grid-item") {
+    e.target.style.background = "black";
+    e.target.style.cursor = 'pointer';
+  }
+}
+
+// Randomize color output
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+// Color grid rainbow
+function hoverColor(e){
+  const rainbowButton = document.getElementById('rainbowButton');
+  rainbowButton.addEventListener("click", hoverColor);
+  if (e.target.className === "grid-item") {
+    e.target.style.background = getRandomColor();
+  }
+}
+
+// Prompt for response and catch any non numeric values
+function getResponse(){
+  let response = prompt("How many boxes would you like? " );
+      getNewDivs(response)
+      if (isNaN(response)){
+        alert("Not a valid selection. Choose a number ex) 3, 4, and etc");
+        return getResponse()
+       }
+       else{
+        return response;
+       }
+}
+
+  const nav = document.getElementById('navigation');
+  nav.addEventListener("click", function(e) {
+    if (e.target.id == "blackButton") {
+      container.removeEventListener("mouseover", hoverColor);
+      container.addEventListener("mouseover", hoverBlack);
+    } 
+    else if (e.target.id == "rainbowButton") {
+      container.removeEventListener("mouseover", hoverBlack);
+      container.addEventListener("mouseover", hoverColor); 
+    } 
+    else if (e.target.id == "resetButton") {
+      clearGrid()
+      getResponse()
+    }
+  });
